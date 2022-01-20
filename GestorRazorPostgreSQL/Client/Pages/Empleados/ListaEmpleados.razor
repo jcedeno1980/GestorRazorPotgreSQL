@@ -1,0 +1,217 @@
+﻿@page "/empleados"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using  GestorPostgreSQL.Shared.Modelos
+@attribute [Authorize]
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<h3>Empleados</h3>
+
+@if (_emps == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Estudios</th>
+                <th>Fecha Nac.</th>
+                <th>Entidades</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var emp in _emps)
+            {
+                <tr>
+
+                    <td>@emp.codigo</td>
+                    <td>@emp.nombre</td>
+                    <td>@emp.direccion</td>
+                    <td>@emp.estudios</td>
+                    <td>@emp.fechanacimiento.ToShortDateString()</td>
+                    <td><input type="radio" name="select" @onclick="@(e => RowClick(emp.codigo))"></td>
+                    <td>
+                        <button class="btn btn-info"
+                                @onclick="(() => Edit(emp.codigo))">
+                            Editar
+                        </button>
+                        <button class="btn btn-danger"
+                                @onclick="(() => Delete(emp.codigo))">
+                            Borrar
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div>
+        <button class="btn btn-success btn-sm float-right" @onclick="Create">Crear Empleados</button>
+    </div>
+
+}
+<hr />
+
+<br>
+
+<h3>Entidades asociadas</h3>
+
+@if (_ents == null)
+{
+    <p><em>No tiene asignado entidades...</em></p>
+}
+else
+{
+    if (_totalents != null)
+    {
+
+        <div class="container">
+            <div class="row">
+                <div class="card">
+                        <div class="card-body">
+
+                            <select class="form-control" value="@selectedvalueEntidad" @onchange="@OnSelect" >
+                                @foreach (var ent in _totalents)
+                                {
+                                    <option value="@ent.codigo"> @ent.nombre </option>
+                                }
+                            </select>
+                            <button class="btn btn-success  btn-sm float-right" @onclick="() => AgregarEntidad(codigoempleadoactual,selectedvalueEntidad)">Agregar entidad</button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Sector</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ent in _ents)
+            {
+                <tr>
+
+                    <td>@ent.codigo</td>
+                    <td>@ent.nombre</td>
+                    <td>@ent.direccion</td>
+                    <td>@ent.sector</td>
+                    <td>
+                        <button class="btn btn-info">
+                            Editar
+                        </button>
+                        <button class="btn btn-danger"
+                                @onclick="(() => DeleteEntidad(codigoempleadoactual, ent.codigo))">
+                            Borrar
+                        </button>
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+@code {
+
+    private List<Entidad> _totalents;
+    private List<Empleado> _emps;
+    private List<Entidad> _ents;
+    private string codigoempleadoactual;
+    private string selectedvalueEntidad = "80040045";
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        try
+        {
+            _emps = await Http.GetFromJsonAsync<List<Empleado>>("/api/Empleados");
+            _totalents = await Http.GetFromJsonAsync<List<Entidad>>("/api/Entidades");
+
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+
+    }
+
+    void OnSelect(ChangeEventArgs e)
+    {
+        selectedvalueEntidad = e.Value.ToString();
+        //Console.WriteLine("The selected country is : " + selectedString);
+    }
+
+
+    private async Task Delete(string Codigo)
+    {
+        await Http.DeleteAsync($"api/Empleados/{Codigo}");
+        _emps = await Http.GetFromJsonAsync<List<Empleado>>("api/Empleados");
+        StateHasChanged();
+    }
+
+    private async Task AgregarEntidad(string codigoempleado, string codigoentidad)
+    {
+        await Http.PostAsJsonAsync<Empleado>($"api/Empleados/Empresa/{codigoempleado}/{codigoentidad}", null);
+        await RowClick(codigoempleado);
+
+    }
+
+    private async Task DeleteEntidad(string codigoempleado, string codigoentidad)
+    {
+        await Http.DeleteAsync($"api/Empleados/Empresa/{codigoempleado}/{codigoentidad}");
+
+        await RowClick(codigoempleado);
+
+    }
+
+
+    private void Edit(string Codigo)
+    {
+        Navigation.NavigateTo($"/Empleados/edit/{Codigo}");
+    }
+
+    private void Create()
+    {
+        Navigation.NavigateTo("/empleados/create");
+    }
+
+
+    private async Task RowClick(string CodigoEmpleado)
+    {
+
+        try
+        {
+            codigoempleadoactual = CodigoEmpleado;
+
+            Empleado emp;
+
+            emp = await Http.GetFromJsonAsync<Empleado>($"/api/Empleados/{CodigoEmpleado}");
+
+            _ents = emp.entidades;
+
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+
+            exception.Redirect();
+        }
+
+    }
+}

@@ -1,0 +1,12 @@
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\bin\Debug\net5.0\GestorRazorPostgreSQL.Shared.deps.json
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\bin\Debug\net5.0\GestorRazorPostgreSQL.Shared.dll
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\bin\Debug\net5.0\ref\GestorRazorPostgreSQL.Shared.dll
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\bin\Debug\net5.0\GestorRazorPostgreSQL.Shared.pdb
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\GestorRazorPostgreSQL.Shared.csprojAssemblyReference.cache
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\GestorRazorPostgreSQL.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\GestorRazorPostgreSQL.Shared.AssemblyInfoInputs.cache
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\GestorRazorPostgreSQL.Shared.AssemblyInfo.cs
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\GestorRazorPostgreSQL.Shared.csproj.CoreCompileInputs.cache
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\GestorRazorPostgreSQL.Shared.dll
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\ref\GestorRazorPostgreSQL.Shared.dll
+C:\Users\jcedeno\Documents\desarrollos\pruebas\GestorRazorPostgreSQL\GestorRazorPostgreSQL\Shared\obj\Debug\net5.0\GestorRazorPostgreSQL.Shared.pdb

@@ -1,0 +1,77 @@
+﻿@page  "/empleados/edit/{codigoempleado}"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using  GestorPostgreSQL.Shared.Modelos
+@attribute [Authorize]
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
+
+<h3>Modificar Empleado</h3>
+
+@if (_emp == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+
+    <EditForm Model="@_emp" OnValidSubmit="Put">
+
+        <table class="table">
+            <tr>
+                <td>Codigo:</td>
+                <td><input type="text" @bind="_emp.codigo" /> </td>
+            </tr>
+            <tr>
+                <td>Nombre:</td>
+                <td><input type="text" @bind="_emp.nombre" /> </td>
+            </tr>
+            <tr>
+                <td>Dirección:</td>
+                <td><input type="text" @bind="_emp.direccion" /> </td>
+            </tr>
+            <tr>
+                <td>Estudios:</td>
+                <td><input type="text" @bind="_emp.estudios" /> </td>
+            </tr>
+            <tr>
+                <td>Fecha nacimiento:</td>
+                <td><input type="text" @bind="_emp.fechanacimiento" /> </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="text-align:center">
+                    <input type="submit" class="btn btn-success" value="Guardar" />
+                    <input type="button" class="btn btn-dark" value="Cancelar" @onclick="Cancelar" />
+                </td>
+            </tr>
+        </table>
+
+    </EditForm>
+
+}
+
+@code {
+    [Parameter]
+    public string codigoempleado { get; set; }
+    private Empleado _emp = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _emp = await Http.GetFromJsonAsync<Empleado>($"/api/Empleados/{codigoempleado}");
+
+    }
+
+    private async Task Put()
+    {
+        await Http.PutAsJsonAsync<Empleado>($"/api/Empleados/{_emp.codigo}", _emp);
+        Navigation.NavigateTo("/empleados");
+    }
+
+    protected void Cancelar()
+    {
+        Navigation.NavigateTo("/empleados");
+    }
+
+}

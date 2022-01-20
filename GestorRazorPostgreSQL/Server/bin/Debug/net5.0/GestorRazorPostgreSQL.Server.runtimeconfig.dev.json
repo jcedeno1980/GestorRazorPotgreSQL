@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "C:\\Users\\jcedeno\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\jcedeno\\.nuget\\packages"
+    ]
+  }
+}
